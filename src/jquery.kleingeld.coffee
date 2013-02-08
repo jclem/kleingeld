@@ -29,7 +29,7 @@ class Kleingeld
 
     @$prompt.on 'keydown', => @promptKeyDown.apply(@, arguments)
     @$prompt.on 'keyup', => @calculatePromptWidth.apply(@, arguments)
-    @$prompt.on 'blur', => @clearPrompt.apply(@, arguments)
+    @$prompt.on 'blur', => @promptBlur.apply(@, arguments)
     @$container.on 'click', '.kleingeld-token', => @removeToken.apply(@, arguments)
     @$container.on 'click', => @$prompt.focus()
 
@@ -47,6 +47,12 @@ class Kleingeld
     else if e.keyCode == 8 && @$prompt.val().length == 0
       @removeLastToken()
     @calculatePromptWidth()
+
+  promptBlur: ->
+    if @validateToken(@$prompt.val())
+      @addToken()
+    else
+      @clearPrompt()
 
   calculatePromptWidth: ->
     @$widthTest.html(@$prompt.val())

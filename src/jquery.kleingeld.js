@@ -39,7 +39,7 @@
         return _this.calculatePromptWidth.apply(_this, arguments);
       });
       this.$prompt.on('blur', function() {
-        return _this.clearPrompt.apply(_this, arguments);
+        return _this.promptBlur.apply(_this, arguments);
       });
       this.$container.on('click', '.kleingeld-token', function() {
         return _this.removeToken.apply(_this, arguments);
@@ -63,6 +63,14 @@
         this.removeLastToken();
       }
       return this.calculatePromptWidth();
+    };
+
+    Kleingeld.prototype.promptBlur = function() {
+      if (this.validateToken(this.$prompt.val())) {
+        return this.addToken();
+      } else {
+        return this.clearPrompt();
+      }
     };
 
     Kleingeld.prototype.calculatePromptWidth = function() {
