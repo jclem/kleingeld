@@ -22,7 +22,6 @@
       this.$tokens = $("<span class='kleingeld-tokens'></span>");
       this.$prompt = $("<input type='text' class='kleingeld-input' size=1>");
       this.$widthTest = $("<span class='kleingeld-width-test'></span>");
-      this.tokens = [];
       this.delimiter = options.delimiter || ',';
       this.triggers = options.triggers || [9, 13, 188];
       this.$el.attr('type', 'hidden');
@@ -47,6 +46,12 @@
       this.$container.on('click', function() {
         return _this.$prompt.focus();
       });
+      if (this.$el.val().length) {
+        this.tokens = this.$el.val().split(',');
+      } else {
+        this.tokens = [];
+      }
+      this.updateTokens();
     }
 
     Kleingeld.prototype.promptKeyDown = function(e) {

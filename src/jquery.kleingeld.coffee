@@ -14,8 +14,6 @@ class Kleingeld
     @$prompt = $("<input type='text' class='kleingeld-input' size=1>")
     @$widthTest = $("<span class='kleingeld-width-test'></span>")
 
-    @tokens = []
-
     @delimiter = options.delimiter || ','
     @triggers = options.triggers || [9, 13, 188]
 
@@ -33,6 +31,13 @@ class Kleingeld
     @$prompt.on 'blur', => @clearPrompt.apply(@, arguments)
     @$container.on 'click', '.kleingeld-token', => @removeToken.apply(@, arguments)
     @$container.on 'click', => @$prompt.focus()
+
+    if @$el.val().length
+      @tokens = @$el.val().split(',')
+    else
+      @tokens = []
+
+    @updateTokens()
 
   promptKeyDown: (e) ->
     if @triggers.indexOf(e.keyCode) > -1
