@@ -8,14 +8,15 @@ class Kleingeld
   constructor: ($el, options) ->
     options || (options = {})
 
-    @$el = $el
+    @$el        = $el
     @$container = $("<div class='kleingeld-container'></div>")
-    @$tokens = $("<span class='kleingeld-tokens'></span>")
-    @$prompt = $("<input type='text' class='kleingeld-input' size=1>")
+    @$tokens    = $("<span class='kleingeld-tokens'></span>")
+    @$prompt    = $("<input type='text' class='kleingeld-input' size=1>")
     @$widthTest = $("<span class='kleingeld-width-test'></span>")
 
-    @delimiter = options.delimiter || ','
-    @triggers = options.triggers || [9, 13, 188]
+    @delimiter  = options.delimiter || ','
+    @triggers   = options.triggers || [9, 13, 188]
+    @regex      = options.regex
 
     @$el.attr 'type', 'hidden'
     @$el.after @$container
@@ -60,11 +61,18 @@ class Kleingeld
   addToken: ->
     val = @$prompt.val().trim()
 
-    if val.length && @tokens.indexOf(val) == -1
+    if @validateToken(val)
       @tokens.push(val)
+      @clearPrompt()
+      @updateTokens()
 
-    @clearPrompt()
-    @updateTokens()
+  validateToken: (val) ->
+    isValid = true
+    isValid = false unless val.length
+    isValid = false unless @tokens.indexOf(val) == -1
+    if @regex
+      isValid = false unless val.match @regex
+    isValid
 
   removeLastToken: ->
     @tokens.pop()

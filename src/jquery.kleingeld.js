@@ -24,6 +24,7 @@
       this.$widthTest = $("<span class='kleingeld-width-test'></span>");
       this.delimiter = options.delimiter || ',';
       this.triggers = options.triggers || [9, 13, 188];
+      this.regex = options.regex;
       this.$el.attr('type', 'hidden');
       this.$el.after(this.$container);
       this.$container.append(this.$tokens);
@@ -80,11 +81,28 @@
     Kleingeld.prototype.addToken = function() {
       var val;
       val = this.$prompt.val().trim();
-      if (val.length && this.tokens.indexOf(val) === -1) {
+      if (this.validateToken(val)) {
         this.tokens.push(val);
+        this.clearPrompt();
+        return this.updateTokens();
       }
-      this.clearPrompt();
-      return this.updateTokens();
+    };
+
+    Kleingeld.prototype.validateToken = function(val) {
+      var isValid;
+      isValid = true;
+      if (!val.length) {
+        isValid = false;
+      }
+      if (this.tokens.indexOf(val) !== -1) {
+        isValid = false;
+      }
+      if (this.regex) {
+        if (!val.match(this.regex)) {
+          isValid = false;
+        }
+      }
+      return isValid;
     };
 
     Kleingeld.prototype.removeLastToken = function() {
