@@ -4,7 +4,7 @@ $ ->
 $.fn.kleingeld = (options) ->
   new Kleingeld($(@), options)
 
-class window.Kleingeld
+class Kleingeld
   constructor: ($el, options) ->
     options || (options = {})
 
