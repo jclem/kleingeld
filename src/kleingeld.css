@@ -1,0 +1,23 @@
+.kleingeld-width-test {
+  display: none;
+  white-space: nowrap;
+}
+
+.kleingeld-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: inherit;
+}
+
+.kleingeld-token {
+  display: inline-block;
+  margin: 4px 4px 0 0;
+  padding: 4px 8px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.kleingeld-token:hover {
+  text-decoration: line-through; 
+}
