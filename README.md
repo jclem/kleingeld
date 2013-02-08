@@ -18,7 +18,7 @@ Using jQuery:
 $('.tags').kleingeld();
 ```
 
-![example](http://cl.ly/image/2J0w1K2u0U32/output.gif)
+![example](http://cl.ly/image/1y373v0q031h/output.gif)
 
 ## License.
 
