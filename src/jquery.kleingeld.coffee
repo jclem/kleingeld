@@ -2,7 +2,7 @@ $ ->
   $('[data-kleingeld]').kleingeld()
 
 $.fn.kleingeld = (options) ->
-  new Kleingeld($(@), options)
+  $(@).each (index, el) -> new Kleingeld($(el), options)
 
 class Kleingeld
   constructor: ($el, options) ->

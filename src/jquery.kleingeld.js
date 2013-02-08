@@ -7,7 +7,9 @@
   });
 
   $.fn.kleingeld = function(options) {
-    return new Kleingeld($(this), options);
+    return $(this).each(function(index, el) {
+      return new Kleingeld($(el), options);
+    });
   };
 
   Kleingeld = (function() {
