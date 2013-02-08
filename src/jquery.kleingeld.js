@@ -22,6 +22,7 @@
       this.$widthTest = $("<span class='kleingeld-width-test'></span>");
       this.tokens = [];
       this.delimiter = options.delimiter || ',';
+      this.triggers = options.triggers || [9, 13, 188];
       this.$el.attr('type', 'hidden');
       this.$el.after(this.$container);
       this.$container.append(this.$tokens);
@@ -47,7 +48,7 @@
     }
 
     Kleingeld.prototype.promptKeyDown = function(e) {
-      if ([9, 13, 188].indexOf(e.keyCode) > -1) {
+      if (this.triggers.indexOf(e.keyCode) > -1) {
         e.preventDefault();
         this.addToken();
       } else if (e.keyCode === 8 && this.$prompt.val().length === 0) {

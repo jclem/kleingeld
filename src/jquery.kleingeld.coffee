@@ -17,6 +17,7 @@ class Kleingeld
     @tokens = []
 
     @delimiter = options.delimiter || ','
+    @triggers = options.triggers || [9, 13, 188]
 
     @$el.attr 'type', 'hidden'
     @$el.after @$container
@@ -34,7 +35,7 @@ class Kleingeld
     @$container.on 'click', => @$prompt.focus()
 
   promptKeyDown: (e) ->
-    if [9, 13, 188].indexOf(e.keyCode) > -1
+    if @triggers.indexOf(e.keyCode) > -1
       e.preventDefault()
       @addToken()
     else if e.keyCode == 8 && @$prompt.val().length == 0
